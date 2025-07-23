@@ -4,25 +4,25 @@ import time
 from pydoover.docker import Application
 from pydoover import ui
 
-from .app_config import SampleConfig
-from .app_ui import SampleUI
-from .app_state import SampleState
+from .app_config import FoxgloveIfaceConfig
+from .app_ui import FoxgloveIfaceUI
+from .app_state import FoxgloveIfaceState
 
 log = logging.getLogger()
 
-class SampleApplication(Application):
-    config: SampleConfig  # not necessary, but helps your IDE provide autocomplete!
+class FoxgloveIfaceApplication(Application):
+    config: FoxgloveIfaceConfig  # not necessary, but helps your IDE provide autocomplete!
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
         self.started: float = time.time()
-        self.ui: SampleUI = None
-        self.state: SampleState = None
+        self.ui: FoxgloveIfaceUI = None
+        self.state: FoxgloveIfaceState = None
 
     async def setup(self):
-        self.ui = SampleUI()
-        self.state = SampleState()
+        self.ui = FoxgloveIfaceUI()
+        self.state = FoxgloveIfaceState()
         self.ui_manager.add_children(*self.ui.fetch())
 
     async def main_loop(self):

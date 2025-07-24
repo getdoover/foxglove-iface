@@ -4,6 +4,7 @@ from pydoover.state import StateMachine
 
 log = logging.getLogger(__name__)
 
+
 class FoxgloveIfaceState:
     state: str
 

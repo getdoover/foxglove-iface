@@ -39,9 +39,10 @@ class FoxgloveIfaceApplication(Application):
         self.state = FoxgloveIfaceState()
         self.ui_manager.add_children(*self.ui.fetch())
         self.server = foxglove.start_server()
-        
-        self.device_agent.add_subscription(TAG_CHANNEL_NAME, self.foxglove_tag_values.on_values_update)
 
+        self.device_agent.add_subscription(
+            TAG_CHANNEL_NAME, self.foxglove_tag_values.on_values_update
+        )
 
     async def main_loop(self):
         log.info("Mainloop is running")

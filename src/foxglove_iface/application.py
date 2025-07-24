@@ -38,7 +38,10 @@ class FoxgloveIfaceApplication(Application):
         # self.ui = FoxgloveIfaceUI()
         # self.state = FoxgloveIfaceState()
         # self.ui_manager.add_children(*self.ui.fetch())
-        self.server = foxglove.start_server()
+        self.server = foxglove.start_server(
+            host="0.0.0.0",
+            port=8765,
+        )
 
         self.device_agent.add_subscription(
             TAG_CHANNEL_NAME, self.foxglove_tag_values.on_values_update

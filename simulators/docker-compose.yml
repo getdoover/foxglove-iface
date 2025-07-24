@@ -18,7 +18,7 @@ services:
     restart: unless-stopped
     depends_on:
       - device_agent
-      - sample_simulator
+      # - sample_simulator
     environment:
       - APP_KEY=test_app_key
       - CONFIG_FP=/app_config.json

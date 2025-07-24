@@ -1,7 +1,7 @@
 {
     "foxglove_iface": {
         "name": "foxglove_iface",
-        "display_name": "foxglove-iface",
+        "display_name": "Foxglove",
         "type": "DEV",
         "visibility": "PUB",
         "allow_many": true,

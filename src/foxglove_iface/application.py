@@ -28,16 +28,16 @@ class FoxgloveIfaceApplication(Application):
         super().__init__(*args, **kwargs)
 
         self.started: float = time.time()
-        self.ui: FoxgloveIfaceUI = None
-        self.state: FoxgloveIfaceState = None
+        # self.ui: FoxgloveIfaceUI = None
+        # self.state: FoxgloveIfaceState = None
         # self.foxglove_channels: dict[str, foxglove.Channel] = {}
         self.server = None
         self.foxglove_tag_values = FoxgloveConverter("/tag_values")
 
     async def setup(self):
-        self.ui = FoxgloveIfaceUI()
-        self.state = FoxgloveIfaceState()
-        self.ui_manager.add_children(*self.ui.fetch())
+        # self.ui = FoxgloveIfaceUI()
+        # self.state = FoxgloveIfaceState()
+        # self.ui_manager.add_children(*self.ui.fetch())
         self.server = foxglove.start_server()
 
         self.device_agent.add_subscription(

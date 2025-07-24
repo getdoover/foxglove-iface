@@ -71,7 +71,10 @@ class FoxgloveConverter:
 
 
 if __name__ == "__main__":
-    foxglove.start_server()
+    foxglove.start_server(
+        host="0.0.0.0",
+        port=8765,
+    )
 
     converter = FoxgloveConverter("/test")
 

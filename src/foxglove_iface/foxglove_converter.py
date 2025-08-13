@@ -146,10 +146,11 @@ class FoxgloveConverter:
             server_listener=self.parameter_manager,
         )
 
-        for ch in self.subscribed_channels:
-            self.device_agent.add_subscription(
-                ch, self.on_values_update
-            )
+        if self.device_agent is not None:
+            for ch in self.subscribed_channels:
+                self.device_agent.add_subscription(
+                    ch, self.on_values_update
+                )
 
     def on_values_update(self, channel_name: str, channel_values: Dict[str, Any]):
         self.handle_values(channel_name, [], channel_values)
@@ -217,7 +218,8 @@ class FoxgloveConverter:
     def update_value_from_parameter(self, param_name: str, new_value: Any):
         """Update the data structure when a parameter value changes"""
         channel_name, json_obj = self.param_to_json(param_name, new_value)
-        self.device_agent.publish_to_channel(channel_name, json_obj, run_sync=True)
+        if self.device_agent is not None:
+            self.device_agent.publish_to_channel(channel_name, json_obj, run_sync=True)
 
 
 if __name__ == "__main__":

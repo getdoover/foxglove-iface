@@ -123,7 +123,7 @@ class FoxgloveParameterManager(ServerListener):
 class FoxgloveConverter:
     """Takes data from a channel and converts it to Foxglove channels working out the schema based on the first value"""
 
-    def __init__(self, device_agent: DeviceAgentInterface, channels: List[str], seperate_levels: int = 1):
+    def __init__(self, device_agent: DeviceAgentInterface, channels: List[str], seperate_levels: int = 1, start_server: bool = True):
         """Creates a new FoxgloveConverter
 
         Args:
@@ -139,9 +139,11 @@ class FoxgloveConverter:
         self.parameter_publish_interval = 6
         self.parameter_manager = FoxgloveParameterManager(self)
 
-        self.server = foxglove.start_server(
-            host="0.0.0.0",
-            port=8765,
+        self.server = None
+        if start_server:
+            self.server = foxglove.start_server(
+                host="0.0.0.0",
+                port=8765,
             capabilities=[Capability.Parameters],
             server_listener=self.parameter_manager,
         )
@@ -177,10 +179,11 @@ class FoxgloveConverter:
             self.parameter_manager.log_parameter([doover_channel] + path, value)
 
         ## Publish the parameters to the server
-        if time.time() - self.last_parameter_publish > self.parameter_publish_interval:
-            # logging.info(f"Publishing parameters to server: {self.parameter_manager.get_all_parameters()}")
-            self.server.publish_parameter_values(self.parameter_manager.get_all_parameters())
-            self.last_parameter_publish = time.time()
+        if self.server is not None:
+            if time.time() - self.last_parameter_publish > self.parameter_publish_interval:
+                # logging.info(f"Publishing parameters to server: {self.parameter_manager.get_all_parameters()}")
+                self.server.publish_parameter_values(self.parameter_manager.get_all_parameters())
+                self.last_parameter_publish = time.time()
 
     def param_to_json(self, topic: str, value: Any) -> Dict[str, Any]:
         parts = [p for p in topic.split("/") if p]  # remove leading ''

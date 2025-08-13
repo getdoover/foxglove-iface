@@ -1,7 +1,7 @@
 def test_converter():
     from foxglove_iface.foxglove_converter import FoxgloveConverter
 
-    converter = FoxgloveConverter(None, ["/test"], 1)
+    converter = FoxgloveConverter(None, ["/test"], 1, start_server=False)
 
     converter.on_values_update(
         "test",
@@ -23,7 +23,7 @@ def test_converter():
     assert converter.channels["g"]["channelValue"] is not None
     assert converter.channels["h"]["channelValue"] is not None
 
-    converter2 = FoxgloveConverter(None, ["/test"], 3)
+    converter2 = FoxgloveConverter(None, ["/test"], 3, start_server=False)
 
     converter2.on_values_update(
         "test",

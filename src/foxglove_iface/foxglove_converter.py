@@ -18,6 +18,43 @@ def generate_schema(path: List[str], value: Any):
     builder.add_object(value)
     schema = builder.to_schema()
     schema["title"] = f"{'-'.join(path)}"
+    
+    # Convert booleans and integers to floats in the schema
+    schema = convert_schema_types_to_float(schema)
+    
+    return schema
+
+def convert_schema_types_to_float(schema: Dict[str, Any]) -> Dict[str, Any]:
+    """Recursively convert boolean and integer types to float in the schema"""
+    if isinstance(schema, dict):
+        # Handle type field
+        if "type" in schema:
+            if schema["type"] in ["boolean", "integer"]:
+                schema["type"] = "number"
+                # Remove any integer-specific constraints
+                if "minimum" in schema and isinstance(schema["minimum"], int):
+                    schema["minimum"] = float(schema["minimum"])
+                if "maximum" in schema and isinstance(schema["maximum"], int):
+                    schema["maximum"] = float(schema["maximum"])
+                if "exclusiveMinimum" in schema and isinstance(schema["exclusiveMinimum"], int):
+                    schema["exclusiveMinimum"] = float(schema["exclusiveMinimum"])
+                if "exclusiveMaximum" in schema and isinstance(schema["exclusiveMaximum"], int):
+                    schema["exclusiveMaximum"] = float(schema["exclusiveMaximum"])
+        
+        # Handle properties for objects
+        if "properties" in schema:
+            for prop_name, prop_schema in schema["properties"].items():
+                schema["properties"][prop_name] = convert_schema_types_to_float(prop_schema)
+        
+        # Handle items for arrays
+        if "items" in schema:
+            schema["items"] = convert_schema_types_to_float(schema["items"])
+        
+        # Handle oneOf, anyOf, allOf
+        for key in ["oneOf", "anyOf", "allOf"]:
+            if key in schema and isinstance(schema[key], list):
+                schema[key] = [convert_schema_types_to_float(item) for item in schema[key]]
+    
     return schema
 
 def _shape(value):

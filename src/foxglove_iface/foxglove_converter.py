@@ -63,6 +63,8 @@ def _shape(value):
     if isinstance(value, list):
         rep = _shape(value[0]) if value else ("empty_list",)
         return ("array", rep)
+    if isinstance(value, int) or isinstance(value, float) or isinstance(value, bool):
+        return ("number",)
     return type(value).__name__
 
 def schema_fingerprint(value) -> str:

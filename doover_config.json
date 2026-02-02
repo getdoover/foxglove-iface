@@ -18,10 +18,20 @@
             "title": "Application Config",
             "type": "object",
             "properties": {},
-            "additionalElements": true
+            "additionalElements": true,
+            "required": []
         },
         "key": "b887414b-ef97-4947-8bcb-33af35e2f44d",
         "repo_branch": "main",
-        "staging_config": {}
+        "staging_config": {},
+        "lambda_config": {},
+        "owner_org_id": null,
+        "container_registry_profile_id": "93955828574386692",
+        "id": "144012914125227532",
+        "organisation_id": null,
+        "code_repo_id": null,
+        "export_config_command": null,
+        "run_command": null,
+        "lambda_arn": null
     }
 }

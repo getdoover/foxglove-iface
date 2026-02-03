@@ -2,6 +2,8 @@
     "foxglove_iface": {
         "name": "foxglove_iface",
         "display_name": "Foxglove",
+        "icon_url": "https://avatars.githubusercontent.com/u/78454435?v=4",
+        "banner_url": "https://cdn.prod.website-files.com/66a36245725199d12625c1d5/68028e19d3397587d663dec9_Foxglove_Logo_Lockup_Color.png",
         "type": "DEV",
         "visibility": "PUB",
         "allow_many": true,

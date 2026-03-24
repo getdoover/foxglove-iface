@@ -9,6 +9,7 @@ import foxglove
 from foxglove.websocket import Parameter, ServerListener, Capability
 
 from pydoover.docker.device_agent import DeviceAgentInterface
+from pydoover.models import EventSubscription, AggregateUpdateEvent
 
 from genson import SchemaBuilder
 
@@ -189,9 +190,16 @@ class FoxgloveConverter:
 
         if self.device_agent is not None:
             for ch in self.subscribed_channels:
-                self.device_agent.add_subscription(
-                    ch, self.on_values_update
+                self.device_agent.add_event_callback(
+                    ch,
+                    self._make_event_handler(ch),
+                    EventSubscription.aggregate_update,
                 )
+
+    def _make_event_handler(self, channel_name: str):
+        async def handler(event: AggregateUpdateEvent):
+            self.on_values_update(channel_name, event.aggregate.data)
+        return handler
 
     def on_values_update(self, channel_name: str, channel_values: Dict[str, Any]):
         self.handle_values(channel_name, [], channel_values)
@@ -261,7 +269,10 @@ class FoxgloveConverter:
         """Update the data structure when a parameter value changes"""
         channel_name, json_obj = self.param_to_json(param_name, new_value)
         if self.device_agent is not None:
-            self.device_agent.publish_to_channel(channel_name, json_obj, run_sync=True)
+            import asyncio
+            asyncio.create_task(
+                self.device_agent.update_channel_aggregate(channel_name, json_obj)
+            )
 
 
 if __name__ == "__main__":

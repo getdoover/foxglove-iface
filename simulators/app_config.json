@@ -1,6 +1,7 @@
 {
-    "simulator_app_key": "sim_app_key",
-    "digital_input_count": 1,
-    "digital_output_count": 2,
-    "a_funny_message": "yeeha"
+    "host": "0.0.0.0",
+    "port": 8765,
+    "channels": ["tag_values", "ui_cmds"],
+    "separate_levels": 1,
+    "parameter_publish_interval": 6.0
 }

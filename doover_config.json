@@ -19,7 +19,83 @@
             "$id": "",
             "title": "$default",
             "type": "object",
-            "properties": {},
+            "properties": {
+                "host": {
+                    "title": "Server Host",
+                    "x-name": "host",
+                    "x-hidden": false,
+                    "type": [
+                        "string",
+                        "null"
+                    ],
+                    "x-required": false,
+                    "description": "Interface the Foxglove websocket server binds to.",
+                    "default": "0.0.0.0",
+                    "x-position": 0
+                },
+                "port": {
+                    "title": "Server Port",
+                    "x-name": "port",
+                    "x-hidden": false,
+                    "type": [
+                        "integer",
+                        "null"
+                    ],
+                    "x-required": false,
+                    "description": "Port the Foxglove websocket server listens on.",
+                    "default": 8765,
+                    "x-position": 1
+                },
+                "channels": {
+                    "title": "Subscribed Channels",
+                    "x-name": "channels",
+                    "x-hidden": false,
+                    "type": [
+                        "array",
+                        "null"
+                    ],
+                    "x-required": false,
+                    "description": "Doover channels to subscribe to and bridge into Foxglove.",
+                    "default": [
+                        "tag_values",
+                        "ui_cmds"
+                    ],
+                    "x-position": 2,
+                    "items": {
+                        "title": "Channel Name",
+                        "x-name": "channel_name",
+                        "x-hidden": false,
+                        "type": "string",
+                        "x-required": true
+                    }
+                },
+                "separate_levels": {
+                    "title": "Separate Levels",
+                    "x-name": "separate_levels",
+                    "x-hidden": false,
+                    "type": [
+                        "integer",
+                        "null"
+                    ],
+                    "x-required": false,
+                    "description": "Depth at which nested channel data is split into separate Foxglove topics.",
+                    "default": 1,
+                    "x-position": 3
+                },
+                "parameter_publish_interval": {
+                    "title": "Parameter Publish Interval",
+                    "x-name": "parameter_publish_interval",
+                    "x-hidden": false,
+                    "type": [
+                        "number",
+                        "null"
+                    ],
+                    "x-required": false,
+                    "description": "Seconds between publishing parameter values to connected Foxglove clients.",
+                    "default": 6.0,
+                    "x-position": 4
+                }
+            },
             "additionalElements": true,
             "required": []
         },

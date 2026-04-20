@@ -69,6 +69,12 @@ uv run export-config
 
 This regenerates the `config_schema` block inside `doover_config.json`. Commit both files.
 
+### No UI export
+
+This app has no `app_ui.py`. `doover_config.json` carries `"export_ui_command": "NO_EXPORT"` so that `doover app publish` (which otherwise runs `uv run export-ui`) skips the UI export step. If a UI is ever added, remove that field and add an `export-ui` script in `pyproject.toml`.
+
+### Config values
+
 When you reference config values in `application.py`, remember:
 
 - Scalars: `self.config.host.value`, `self.config.port.value`

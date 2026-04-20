@@ -109,6 +109,7 @@
         "organisation_id": null,
         "code_repo_id": null,
         "export_config_command": null,
+        "export_ui_command": "NO_EXPORT",
         "run_command": null,
         "lambda_arn": null
     }

@@ -6,6 +6,8 @@ HEALTHCHECK --interval=30s --timeout=2s --start-period=5s CMD curl -f "127.0.0.1
 ## FIRST STAGE ##
 FROM base_image AS builder
 
+RUN apt-get update && apt-get install -y --no-install-recommends git && rm -rf /var/lib/apt/lists/*
+
 COPY --from=ghcr.io/astral-sh/uv:0.7.3 /uv /uvx /bin/
 ENV UV_COMPILE_BYTECODE=1 UV_LINK_MODE=copy
 ENV UV_PYTHON_DOWNLOADS=0
